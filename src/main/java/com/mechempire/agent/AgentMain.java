@@ -1,7 +1,7 @@
 package com.mechempire.agent;
 
-import com.mechempire.agent.mech.DefaultMech;
-import com.mechempire.sdk.core.factory.MechFactory;
+import com.mechempire.sdk.core.game.AbstractMech;
+import com.mechempire.sdk.core.game.AbstractTeam;
 import com.mechempire.sdk.core.game.IMechControlFlow;
 import com.mechempire.sdk.core.message.IProducer;
 import com.mechempire.sdk.runtime.CommandMessage;
@@ -22,16 +22,17 @@ public class AgentMain implements IMechControlFlow {
     private CommandMessage commandMessage;
 
     @Override
-    public void run(IProducer producer) {
-        DefaultMech mainMech = new DefaultMech();
-        MechFactory.assemblyMech(mainMech);
+    public void run(IProducer producer, AbstractTeam team) {
+        AbstractMech mainMech = team.getMechList().get(0);
         commandMessage = new CommandMessage();
         commandMessage.setTeamId(2);
 
         while (true) {
             // 指令帧
-            System.out.printf(ANSI_RED + "I'm red, vehicle_id: %d, weapon_id: %d, ammunition_id: %d, time: %d\n",
-                    mainMech.getVehicleId(), mainMech.getWeaponId(), mainMech.getAmmunitionId(), System.currentTimeMillis());
+            System.out.printf(ANSI_RED + "I'm %s, vehicle_id: %d, weapon_id: %d, ammunition_id: %d, time: %d\n",
+                    team.getTeamName(), mainMech.getVehicleId(), mainMech.getWeaponId(), mainMech.getAmmunitionId(),
+                    System.currentTimeMillis()
+            );
             commandMessage.cleanCommandSeq();
             commandMessage.appendCommandSeq(mainMech.getVehicle().forward());
             producer.product(commandMessage);
