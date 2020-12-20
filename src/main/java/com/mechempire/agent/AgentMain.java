@@ -16,9 +16,6 @@ import com.mechempire.sdk.runtime.CommandMessage;
  */
 public class AgentMain implements IMechControlFlow {
 
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-
     private CommandMessage commandMessage;
 
     @Override
@@ -28,13 +25,12 @@ public class AgentMain implements IMechControlFlow {
         commandMessage.setTeamId(2);
 
         while (true) {
-            // 指令帧
-            System.out.printf(ANSI_RED + "I'm %s, vehicle_id: %d, weapon_id: %d, ammunition_id: %d, time: %d\n",
-                    team.getTeamName(), mainMech.getVehicleId(), mainMech.getWeaponId(), mainMech.getAmmunitionId(),
-                    System.currentTimeMillis()
-            );
-            commandMessage.cleanCommandSeq();
-            commandMessage.appendCommandSeq(mainMech.getVehicle().forward());
+//            System.out.printf("I'm %s, vehicle_id: %d, weapon_id: %d, ammunition_id: %d, time: %d\n",
+//                    team.getTeamName(), mainMech.getVehicle().getId(), mainMech.getWeapon().getId(), mainMech.getAmmunition().getId(),
+//                    System.currentTimeMillis()
+//            );
+            commandMessage.clearByteSeq();
+            commandMessage.appendByteSeq(mainMech.getVehicle().forward());
             producer.product(commandMessage);
             try {
                 Thread.sleep(1000);

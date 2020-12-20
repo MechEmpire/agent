@@ -1,5 +1,8 @@
 package com.mechempire.agent.mech;
 
+import com.mechempire.sdk.core.component.CannonWeapon;
+import com.mechempire.sdk.core.component.DefaultAmmunition;
+import com.mechempire.sdk.core.component.DestroyerVehicle;
 import com.mechempire.sdk.core.game.AbstractMech;
 
 /**
@@ -10,9 +13,23 @@ import com.mechempire.sdk.core.game.AbstractMech;
  */
 public class DefaultMech extends AbstractMech {
 
-    public void go() {
-        this.getVehicle().forward();
-        System.out.printf("I'm blue, vehicle_id: %d, weapon_id: %d, ammunition_id: %d, time: %d\n",
-                this.vehicleId, this.vehicleId, this.weaponId, System.currentTimeMillis());
+    /**
+     * 载具类
+     */
+    protected Class<?> vehicleClazz = DestroyerVehicle.class;
+
+    /**
+     * 武器类
+     */
+    protected Class<?> weaponClazz = CannonWeapon.class;
+
+    /**
+     * 弹药类
+     */
+    protected Class<?> ammunitionClazz = DefaultAmmunition.class;
+
+    @Override
+    public double getBloodCount() {
+        return 0;
     }
 }
