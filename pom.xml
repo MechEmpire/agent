@@ -18,15 +18,6 @@
             <groupId>com.mechempire</groupId>
             <artifactId>sdk</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>/home/tairy/Documents/Working/mechempire/sdk/target/sdk-1.0-SNAPSHOT.jar</systemPath>
-        </dependency>
-
-        <!-- todo 后期删除 -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>30.0-jre</version>
         </dependency>
     </dependencies>
 

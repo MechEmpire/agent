@@ -6,6 +6,8 @@ import com.mechempire.sdk.core.game.IMechControlFlow;
 import com.mechempire.sdk.core.message.IProducer;
 import com.mechempire.sdk.runtime.CommandMessage;
 
+import java.util.Random;
+
 /**
  * package: com.mechempire.agent
  *
@@ -30,7 +32,9 @@ public class AgentMain implements IMechControlFlow {
 //                    System.currentTimeMillis()
 //            );
             commandMessage.clearByteSeq();
-            commandMessage.appendByteSeq(mainMech.getVehicle().forward());
+            Random random = new Random();
+            int target = random.ints(100, 800).findFirst().getAsInt();
+            commandMessage.appendByteSeq(mainMech.getVehicle().forward(target, target));
             producer.product(commandMessage);
             try {
                 Thread.sleep(1000);
