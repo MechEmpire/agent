@@ -1,9 +1,12 @@
 package com.mechempire.agent;
 
+import com.mechempire.sdk.constant.EngineStatus;
+import com.mechempire.sdk.constant.MechRunResult;
 import com.mechempire.sdk.core.game.AbstractMech;
 import com.mechempire.sdk.core.game.AbstractTeam;
 import com.mechempire.sdk.core.game.IMechControlFlow;
 import com.mechempire.sdk.core.message.IProducer;
+import com.mechempire.sdk.runtime.AgentWorld;
 import com.mechempire.sdk.runtime.CommandMessage;
 
 import java.util.Random;
@@ -18,29 +21,25 @@ import java.util.Random;
  */
 public class AgentMain implements IMechControlFlow {
 
-    private CommandMessage commandMessage;
-
+    /**
+     * agent 流程控制函数
+     *
+     * @param producer   生产者队列
+     * @param team       队伍
+     * @param agentWorld world
+     */
     @Override
-    public void run(IProducer producer, AbstractTeam team) {
+    public MechRunResult run(IProducer producer, AbstractTeam team, AgentWorld agentWorld) {
         AbstractMech mainMech = team.getMechList().get(0);
-        commandMessage = new CommandMessage();
-        commandMessage.setTeamId(2);
-
-        while (true) {
-//            System.out.printf("I'm %s, vehicle_id: %d, weapon_id: %d, ammunition_id: %d, time: %d\n",
-//                    team.getTeamName(), mainMech.getVehicle().getId(), mainMech.getWeapon().getId(), mainMech.getAmmunition().getId(),
-//                    System.currentTimeMillis()
-//            );
-            commandMessage.clearByteSeq();
-            Random random = new Random();
-            int target = random.ints(100, 800).findFirst().getAsInt();
-            commandMessage.appendByteSeq(mainMech.getVehicle().forward(target, target));
-            producer.product(commandMessage);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if (!agentWorld.getEngineStatus().equals(EngineStatus.OCCUPIED)) {
+            return MechRunResult.READY;
         }
+        CommandMessage commandMessage = new CommandMessage();
+        commandMessage.setTeamId(team.getTeamId());
+        Random random = new Random();
+        int target = random.ints(10, 1000).findFirst().getAsInt();
+        commandMessage.appendByteSeq(mainMech.getVehicle().forward(target, target));
+        producer.product(commandMessage);
+        return MechRunResult.SUCCESS;
     }
 }
