@@ -37,8 +37,9 @@ public class AgentMain implements IMechControlFlow {
         CommandMessage commandMessage = new CommandMessage();
         commandMessage.setTeamId(team.getTeamId());
         Random random = new Random();
-        int target = random.ints(10, 1000).findFirst().getAsInt();
-        commandMessage.appendByteSeq(mainMech.getVehicle().forward(target, target));
+        int targetX = random.ints(10, 1000).findFirst().getAsInt();
+        int targetY = random.ints(10, 1000).findFirst().getAsInt();
+        commandMessage.appendByteSeq(mainMech.getVehicle().forward(targetX, targetY));
         producer.product(commandMessage);
         return MechRunResult.SUCCESS;
     }

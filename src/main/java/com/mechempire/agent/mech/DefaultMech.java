@@ -1,8 +1,6 @@
 package com.mechempire.agent.mech;
 
-import com.mechempire.sdk.core.component.CannonWeapon;
-import com.mechempire.sdk.core.component.DefaultAmmunition;
-import com.mechempire.sdk.core.component.DestroyerVehicle;
+import com.mechempire.sdk.constant.MapComponent;
 import com.mechempire.sdk.core.game.AbstractMech;
 
 /**
@@ -14,22 +12,22 @@ import com.mechempire.sdk.core.game.AbstractMech;
 public class DefaultMech extends AbstractMech {
 
     /**
-     * 载具类
+     * 载具组件
      */
-    protected Class<?> vehicleClazz = DestroyerVehicle.class;
+    protected MapComponent vehicleComponent = MapComponent.DESTROYER_VEHICLE;
 
     /**
-     * 武器类
+     * 武器组件
      */
-    protected Class<?> weaponClazz = CannonWeapon.class;
+    protected MapComponent weaponComponent = MapComponent.CANNON_WEAPON;
 
     /**
-     * 弹药类
+     * 弹药组件
      */
-    protected Class<?> ammunitionClazz = DefaultAmmunition.class;
+    protected MapComponent ammunitionComponent = MapComponent.DEFAULT_AMMUNITION;
 
     @Override
     public double getBloodCount() {
-        return 0;
+        return 100;
     }
 }
