@@ -8,8 +8,7 @@ import com.mechempire.sdk.core.game.IMechControlFlow;
 import com.mechempire.sdk.core.message.IProducer;
 import com.mechempire.sdk.runtime.AgentWorld;
 import com.mechempire.sdk.runtime.CommandMessage;
-
-import java.util.Random;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * package: com.mechempire.agent
@@ -19,6 +18,7 @@ import java.util.Random;
  * <p>
  * agent 主类
  */
+@Slf4j
 public class AgentMain implements IMechControlFlow {
 
     /**
@@ -36,9 +36,27 @@ public class AgentMain implements IMechControlFlow {
         }
         CommandMessage commandMessage = new CommandMessage();
         commandMessage.setTeamId(team.getTeamId());
-        Random random = new Random();
-        int targetX = random.ints(10, 1000).findFirst().getAsInt();
-        int targetY = random.ints(10, 1000).findFirst().getAsInt();
+
+        double targetX = 80.0, targetY = 80.0;
+        if ((int) mainMech.getPosition().getX() == 80 && (int) mainMech.getPosition().getY() == 80) {
+            targetX = 1135.0;
+            targetY = 80.0;
+        }
+
+        if ((int) mainMech.getPosition().getX() == 1135 && (int) mainMech.getPosition().getY() == 80) {
+            targetX = 1135.0;
+            targetY = 1135.0;
+        }
+
+        if ((int) mainMech.getPosition().getX() == 1135 && (int) mainMech.getPosition().getY() == 1135) {
+            targetX = 80.0;
+            targetY = 1135.0;
+        }
+
+        if ((int) mainMech.getPosition().getX() == 80 && (int) mainMech.getPosition().getY() == 1135) {
+            targetX = 80.0;
+            targetY = 80.0;
+        }
         commandMessage.appendByteSeq(mainMech.getVehicle().forward(targetX, targetY));
         producer.product(commandMessage);
         return MechRunResult.SUCCESS;

@@ -18,14 +18,14 @@ public class Team extends AbstractTeam {
     /**
      * 队伍唯一 ID
      */
-    protected long teamId = 1;
+    protected long teamId = 2;
 
     /**
      * 队伍名称
      * 皮尔特沃夫
      * 德马西亚
      */
-    protected String teamName = "皮尔特沃夫";
+    protected String teamName = "德马西亚";
     /**
      * 机甲列表
      */
